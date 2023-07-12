@@ -2,6 +2,8 @@
 Imports System.IO
 Imports System.Text
 Imports Microsoft.VisualBasic.ApplicationServices
+Imports iTextSharp.text
+Imports iTextSharp.text.pdf
 
 Public Class Form1
     Dim table As New DataTable()
@@ -11,8 +13,11 @@ Public Class Form1
         displayDate = $"Today: {Date.Now.ToString("yyyy/MM/dd")}"
         Return displayDate
     End Function
+
+
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        ConnectDatabase()
+        Dim dataAccess As New DataAccess()
+        DataAccess.ConnectionDatabase()
 
         dateLabel.Text = ShowTime()
 
@@ -35,23 +40,45 @@ Public Class Form1
     End Sub
 
     Private Sub LoadData()
-        Dim command As New SqlCommand("SELECT * FROM users", Connect)
-        Dim adapter As New SqlDataAdapter(command)
-        Dim dataset As New DataSet()
-        adapter.Fill(dataset)
+        Dim persons As List(Of Person) = DataAccess.GetAllPersons()
 
-        For Each row As DataRow In dataset.Tables(0).Rows
-            table.Rows.Add(row("id"), row("fullName"), row("dateOfBirth"), row("address"), row("department"), row("position"), row("note"))
+        For Each person As Person In persons
+            table.Rows.Add(person.id, person.fullName, person.dateOfBirth, person.address, person.department, person.position, person.note)
         Next
+    End Sub
+
+    Private Sub ExportToPdf(fileName As String)
+        Dim document As New Document()
+        Dim writer As PdfWriter = PdfWriter.GetInstance(document, New FileStream(fileName, FileMode.Create))
+        document.Open()
+
+        Dim pdfTable As New PdfPTable(table.Columns.Count)
+
+        For Each column As DataColumn In table.Columns
+            pdfTable.AddCell(column.ColumnName)
+        Next
+
+        For Each row As DataRow In table.Rows
+            For Each item As Object In row.ItemArray
+                pdfTable.AddCell(item.ToString())
+            Next
+        Next
+
+        document.Add(pdfTable)
+        document.Close()
+
+        MessageBox.Show("Export completed successfully.", "Export file PDF", MessageBoxButtons.OK, MessageBoxIcon.Information)
     End Sub
 
     Private Sub btnSearch_Click(sender As Object, e As EventArgs) Handles searchBtn.Click
         Dim query As String = searchBox.Text.Trim()
         If query <> String.Empty Then
             Dim view As New DataView(table)
+
             view.RowFilter = $"[Họ Tên] like '%{query}%'"
             tableView.DataSource = view
         Else
+
             tableView.DataSource = table
         End If
     End Sub
@@ -178,5 +205,16 @@ Public Class Form1
         Catch ex As Exception
             MessageBox.Show("Error importing file: " & ex.Message, "Import file csv", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
+    End Sub
+
+    Private Sub btnExportPDF_Click(sender As Object, e As EventArgs) Handles btnExportPDF.Click
+        Dim saveFileDialog As New SaveFileDialog
+        saveFileDialog.Filter = "PDF files (*.pdf)|*.pdf|All files (*.*)|*.*"
+
+        If saveFileDialog.ShowDialog() <> DialogResult.OK Then
+            Return
+        End If
+
+        ExportToPdf(saveFileDialog.FileName)
     End Sub
 End Class

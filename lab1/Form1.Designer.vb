@@ -38,6 +38,7 @@ Partial Class Form1
         Me.BindingSource2 = New System.Windows.Forms.BindingSource(Me.components)
         Me.btnExport = New System.Windows.Forms.Button()
         Me.btnImport = New System.Windows.Forms.Button()
+        Me.btnExportPDF = New System.Windows.Forms.Button()
         CType(Me.tableView, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.BindingSource1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.BindingSource2, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -153,12 +154,24 @@ Partial Class Form1
         Me.btnImport.Text = "Import"
         Me.btnImport.UseVisualStyleBackColor = False
         '
+        'btnExportPDF
+        '
+        Me.btnExportPDF.BackColor = System.Drawing.Color.Gold
+        Me.btnExportPDF.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnExportPDF.Location = New System.Drawing.Point(359, 455)
+        Me.btnExportPDF.Name = "btnExportPDF"
+        Me.btnExportPDF.Size = New System.Drawing.Size(97, 34)
+        Me.btnExportPDF.TabIndex = 10
+        Me.btnExportPDF.Text = "PDF"
+        Me.btnExportPDF.UseVisualStyleBackColor = False
+        '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.SystemColors.ButtonHighlight
         Me.ClientSize = New System.Drawing.Size(1109, 570)
+        Me.Controls.Add(Me.btnExportPDF)
         Me.Controls.Add(Me.btnImport)
         Me.Controls.Add(Me.btnExport)
         Me.Controls.Add(Me.createBtn)
@@ -194,4 +207,5 @@ Partial Class Form1
     Friend WithEvents BindingSource2 As BindingSource
     Friend WithEvents btnExport As Button
     Friend WithEvents btnImport As Button
+    Friend WithEvents btnExportPDF As Button
 End Class

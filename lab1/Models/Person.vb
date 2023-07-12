@@ -46,10 +46,23 @@ End Class
 
 
 Public Class DataAccess
-    Public Sub InsertPerson(ByVal person As Person)
+    Private Shared Connect As SqlConnection
+
+    Public Shared Sub ConnectionDatabase()
+        Dim connectionString As String = "Data Source=DNCPU0136;Initial Catalog=UserManagement;Integrated Security=True"
+        Connect = New SqlConnection(connectionString)
+        Connect.Open()
+    End Sub
+    Public Shared Sub Disconnect()
+        If Connect IsNot Nothing AndAlso Connect.State = ConnectionState.Open Then
+            Connect.Close()
+        End If
+    End Sub
+
+
+    Public Shared Sub InsertPerson(ByVal person As Person)
         Dim query As String = "INSERT INTO users (id, fullName, dateOfBirth, address, department, position, note) VALUES (@id, @fullName, @dateOfBirth, @address, @department, @position, @note)"
 
-        ConnectDatabase()
         Dim transaction As SqlTransaction = Connect.BeginTransaction()
 
         Try
@@ -70,10 +83,9 @@ Public Class DataAccess
         End Try
     End Sub
 
-    Public Sub UpdatePerson(ByVal person As Person)
+    Public Shared Sub UpdatePerson(ByVal person As Person)
         Dim query As String = "UPDATE users SET fullName = @fullName, dateOfBirth = @dateOfBirth, address = @address, department = @department, position = @position, note = @note WHERE ID = @id"
 
-        ConnectDatabase()
         Dim transaction As SqlTransaction = Connect.BeginTransaction()
 
         Try
@@ -95,13 +107,28 @@ Public Class DataAccess
         End Try
     End Sub
 
-    Public Sub DeletePerson(ByVal id As Integer)
+    Public Shared Sub DeletePerson(ByVal id As Integer)
         Dim query As String = "DELETE FROM users WHERE id = @id"
-        ConnectDatabase()
 
         Using command As New SqlCommand(query, Connect)
             command.Parameters.AddWithValue("@id", id)
             command.ExecuteNonQuery()
         End Using
     End Sub
+
+    Public Shared Function GetAllPersons() As List(Of Person)
+        Dim query As String = "SELECT * FROM users"
+        Dim command As New SqlCommand(query, Connect)
+        Dim adapter As New SqlDataAdapter(command)
+        Dim dataset As New DataSet()
+        adapter.Fill(dataset)
+
+        Dim persons As New List(Of Person)()
+        For Each row As DataRow In dataset.Tables(0).Rows
+            Dim person As New Person(Convert.ToInt32(row("id")), row("fullName").ToString(), Convert.ToDateTime(row("dateOfBirth")), row("address").ToString(), row("department").ToString(), row("position").ToString(), row("note").ToString())
+            persons.Add(person)
+        Next
+
+        Return persons
+    End Function
 End Class
