@@ -201,6 +201,10 @@ Public Class Form1
                     Dim person As Person = Person.FromCsvRow(row)
                     Dim dataAccess As New DataAccess()
                     If person IsNot Nothing Then
+                        If DataAccess.PersonExists(person.id) Then
+                            Dim newId As Integer = DataAccess.GetNewId()
+                            person.id = newId
+                        End If
                         DataAccess.InsertPerson(person)
                         table.Rows.Add(person.id, person.fullName, person.dateOfBirth, person.address, person.department, person.position, person.note)
                     End If

@@ -134,4 +134,25 @@ Public Class DataAccess
         Return persons
     End Function
 
+    Public Shared Function PersonExists(ByVal id As Integer) As Boolean
+        Dim query As String = "SELECT COUNT(*) FROM users WHERE id = @id"
+        Using command As New SqlCommand(query, Connect)
+            command.Parameters.AddWithValue("@id", id)
+            Dim count As Integer = Convert.ToInt32(command.ExecuteScalar())
+            Return count > 0
+        End Using
+    End Function
+
+    Public Shared Function GetNewId() As Integer
+        Dim query As String = "SELECT MAX(id) FROM users"
+        Using command As New SqlCommand(query, Connect)
+            Dim maxId As Object = command.ExecuteScalar()
+            If maxId Is DBNull.Value Then
+                Return 1
+            Else
+                Return Convert.ToInt32(maxId) + 1
+            End If
+        End Using
+    End Function
+
 End Class
