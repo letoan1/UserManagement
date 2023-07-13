@@ -5,6 +5,7 @@ Imports Microsoft.VisualBasic.ApplicationServices
 Imports iTextSharp.text
 Imports iTextSharp.text.pdf
 Imports Model
+Imports System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel
 
 Public Class Form1
     Dim table As New DataTable()
@@ -37,6 +38,16 @@ Public Class Form1
         tableView.AutoGenerateColumns = True
         tableView.AllowUserToAddRows = False
         tableView.ReadOnly = True
+
+        Dim role As String = DataAccess.GetRole()
+        If role = "viewer" Then
+            Me.createBtn.Hide()
+            Me.btnImport.Hide()
+            Me.btnExport.Hide()
+            Me.btnExportPDF.Hide()
+            Me.editBtn.Hide()
+            Me.deleteBtn.Hide()
+        End If
 
     End Sub
 
@@ -159,6 +170,10 @@ Public Class Form1
         Dim dataAccess As New DataAccess()
 
         If person IsNot Nothing Then
+            If DataAccess.PersonExists(person.id) Then
+                Dim newId As Integer = DataAccess.GetNewId()
+                person.id = newId
+            End If
             DataAccess.InsertPerson(person)
             table.Rows.Add(person.id, person.fullName, person.dateOfBirth, person.address, person.department, person.position, person.note)
         End If

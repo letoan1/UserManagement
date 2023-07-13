@@ -32,14 +32,14 @@ Partial Class Form1
         Me.deleteBtn = New System.Windows.Forms.Button()
         Me.editBtn = New System.Windows.Forms.Button()
         Me.createBtn = New System.Windows.Forms.Button()
-        Me.BindingSource1 = New System.Windows.Forms.BindingSource(Me.components)
         Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
         Me.PrintDialog1 = New System.Windows.Forms.PrintDialog()
-        Me.BindingSource2 = New System.Windows.Forms.BindingSource(Me.components)
         Me.btnExport = New System.Windows.Forms.Button()
         Me.btnImport = New System.Windows.Forms.Button()
         Me.btnExportPDF = New System.Windows.Forms.Button()
         Me.Panel1 = New System.Windows.Forms.Panel()
+        Me.BindingSource1 = New System.Windows.Forms.BindingSource(Me.components)
+        Me.BindingSource2 = New System.Windows.Forms.BindingSource(Me.components)
         CType(Me.tableView, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.BindingSource1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.BindingSource2, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -210,14 +210,14 @@ Partial Class Form1
     Friend WithEvents BackgroundWorker1 As System.ComponentModel.BackgroundWorker
     Friend WithEvents searchBox As TextBox
     Friend WithEvents tableView As DataGridView
-    Friend WithEvents deleteBtn As Button
-    Friend WithEvents editBtn As Button
-    Friend WithEvents createBtn As Button
     Friend WithEvents OpenFileDialog1 As OpenFileDialog
     Friend WithEvents PrintDialog1 As PrintDialog
     Friend WithEvents BindingSource2 As BindingSource
-    Friend WithEvents btnExport As Button
-    Friend WithEvents btnImport As Button
-    Friend WithEvents btnExportPDF As Button
     Friend WithEvents Panel1 As Panel
+    Public WithEvents deleteBtn As Button
+    Public WithEvents editBtn As Button
+    Public WithEvents createBtn As Button
+    Public WithEvents btnExport As Button
+    Public WithEvents btnImport As Button
+    Public WithEvents btnExportPDF As Button
 End Class

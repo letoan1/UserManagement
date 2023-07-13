@@ -12,8 +12,6 @@ Public Class Form2
         departmentBox.Text = department
         positionBox.Text = position
         noteBox.Text = note
-
-
     End Sub
 
     Private Sub Form2_Load(sender As Object, e As EventArgs) Handles MyBase.Load

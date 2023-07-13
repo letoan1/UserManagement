@@ -92,10 +92,17 @@
     <Compile Include="Form2.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Form3.Designer.vb">
+      <DependentUpon>Form3.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form3.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
       <DependentUpon>Application.myapp</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="My Project\Resources.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -107,10 +114,10 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="UserManagementDataSet1.Designer.vb">
+    <Compile Include="UserManagementDataSet.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>UserManagementDataSet1.xsd</DependentUpon>
+      <DependentUpon>UserManagementDataSet.xsd</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -119,6 +126,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Form2.resx">
       <DependentUpon>Form2.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form3.resx">
+      <DependentUpon>Form3.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
@@ -139,16 +149,16 @@
     </None>
     <None Include="App.config" />
     <None Include="packages.config" />
-    <None Include="UserManagementDataSet1.xsc">
-      <DependentUpon>UserManagementDataSet1.xsd</DependentUpon>
+    <None Include="UserManagementDataSet.xsc">
+      <DependentUpon>UserManagementDataSet.xsd</DependentUpon>
     </None>
-    <None Include="UserManagementDataSet1.xsd">
+    <None Include="UserManagementDataSet.xsd">
       <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>UserManagementDataSet1.Designer.vb</LastGenOutput>
+      <LastGenOutput>UserManagementDataSet.Designer.vb</LastGenOutput>
       <SubType>Designer</SubType>
     </None>
-    <None Include="UserManagementDataSet1.xss">
-      <DependentUpon>UserManagementDataSet1.xsd</DependentUpon>
+    <None Include="UserManagementDataSet.xss">
+      <DependentUpon>UserManagementDataSet.xsd</DependentUpon>
     </None>
   </ItemGroup>
   <ItemGroup>

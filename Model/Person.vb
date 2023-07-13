@@ -155,4 +155,34 @@ Public Class DataAccess
         End Using
     End Function
 
+    Public Shared _UserRole As String = Nothing
+    Public Shared Function Login(username As String, pw As String) As Boolean
+        Dim query As String = "SELECT password, role FROM auth WHERE username = @username"
+        Dim password As String = Nothing
+        Dim role As String = Nothing
+
+        ConnectionDatabase()
+        Using command As New SqlCommand(query, Connect)
+            command.Parameters.AddWithValue("@Username", username)
+            Dim result As SqlDataReader = command.ExecuteReader()
+            If result.HasRows Then
+                While result.Read()
+                    password = result("password").ToString()
+                    role = result("role").ToString()
+                End While
+            End If
+        End Using
+
+        If password IsNot Nothing AndAlso password = pw Then
+            _UserRole = role
+            Return True
+        Else
+            Return False
+        End If
+    End Function
+
+    Public Shared Function GetRole() As String
+        Return _UserRole
+    End Function
+
 End Class
