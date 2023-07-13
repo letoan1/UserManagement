@@ -56,12 +56,17 @@ Public Class Form1
         Dim pdfTable As New PdfPTable(table.Columns.Count)
 
         For Each column As DataColumn In table.Columns
-            pdfTable.AddCell(column.ColumnName)
+            Dim cell As New PdfPCell(New Phrase(column.ColumnName))
+            If column.ColumnName = "Năm sinh" Then
+                cell.Phrase = New Phrase("Năm sinh")
+            End If
+            pdfTable.AddCell(cell)
         Next
 
         For Each row As DataRow In table.Rows
             For Each item As Object In row.ItemArray
-                pdfTable.AddCell(item.ToString())
+                Dim cell As New PdfPCell(New Phrase(If(TypeOf item Is Date, DirectCast(item, Date).ToString("MM/dd/yyyy"), If(item Is DBNull.Value, "", item.ToString()))))
+                pdfTable.AddCell(cell)
             Next
         Next
 
@@ -169,12 +174,12 @@ Public Class Form1
         End If
 
         Using writer As New StreamWriter(saveFileDialog.FileName)
-            Dim headers = table.Columns.Cast(Of DataColumn)().Select(Function(col) col.ColumnName)
-            writer.WriteLine(String.Join(" - ", headers))
+            Dim headers = table.Columns.Cast(Of DataColumn)().Select(Function(col) If(col.ColumnName = "Năm sinh", "Năm sinh", col.ColumnName))
+            writer.WriteLine(String.Join(",", headers))
 
             For Each row As DataRow In table.Rows
-                Dim fields = row.ItemArray.Select(Function(field) If(field Is DBNull.Value, "", field.ToString()))
-                writer.WriteLine(String.Join(" - ", fields))
+                Dim fields = row.ItemArray.Select(Function(field) If(TypeOf field Is Date, DirectCast(field, Date).ToString("MM/dd/yyyy"), If(field Is DBNull.Value, "", field.ToString())))
+                writer.WriteLine(String.Join(",", fields))
             Next
         End Using
 
