@@ -39,6 +39,7 @@ Partial Class Form1
         Me.btnExport = New System.Windows.Forms.Button()
         Me.btnImport = New System.Windows.Forms.Button()
         Me.btnExportPDF = New System.Windows.Forms.Button()
+        Me.Panel1 = New System.Windows.Forms.Panel()
         CType(Me.tableView, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.BindingSource1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.BindingSource2, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -165,12 +166,21 @@ Partial Class Form1
         Me.btnExportPDF.Text = "PDF"
         Me.btnExportPDF.UseVisualStyleBackColor = False
         '
+        'Panel1
+        '
+        Me.Panel1.BackColor = System.Drawing.SystemColors.ActiveCaption
+        Me.Panel1.Location = New System.Drawing.Point(72, 86)
+        Me.Panel1.Name = "Panel1"
+        Me.Panel1.Size = New System.Drawing.Size(749, 10)
+        Me.Panel1.TabIndex = 11
+        '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.SystemColors.ButtonHighlight
         Me.ClientSize = New System.Drawing.Size(1109, 570)
+        Me.Controls.Add(Me.Panel1)
         Me.Controls.Add(Me.btnExportPDF)
         Me.Controls.Add(Me.btnImport)
         Me.Controls.Add(Me.btnExport)
@@ -183,6 +193,7 @@ Partial Class Form1
         Me.Controls.Add(Me.mainTitle)
         Me.Controls.Add(Me.searchBtn)
         Me.Name = "Form1"
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Form1"
         CType(Me.tableView, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.BindingSource1, System.ComponentModel.ISupportInitialize).EndInit()
@@ -208,4 +219,5 @@ Partial Class Form1
     Friend WithEvents btnExport As Button
     Friend WithEvents btnImport As Button
     Friend WithEvents btnExportPDF As Button
+    Friend WithEvents Panel1 As Panel
 End Class

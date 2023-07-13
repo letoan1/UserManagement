@@ -4,6 +4,7 @@ Imports System.Text
 Imports Microsoft.VisualBasic.ApplicationServices
 Imports iTextSharp.text
 Imports iTextSharp.text.pdf
+Imports Model
 
 Public Class Form1
     Dim table As New DataTable()
@@ -91,14 +92,14 @@ Public Class Form1
 
     Private Sub btnEdit_Click(sender As Object, e As EventArgs) Handles editBtn.Click
         If tableView.SelectedRows.Count > 0 Then
-            Dim selectedRow = tableView.SelectedRows(0)
-            Dim id = CInt(selectedRow.Cells("ID").Value)
-            Dim name = selectedRow.Cells("Họ Tên").Value.ToString()
-            Dim dob = selectedRow.Cells("Năm sinh").Value.ToString()
-            Dim address = selectedRow.Cells("Địa chỉ").Value.ToString()
-            Dim department = selectedRow.Cells("Bộ phận").Value.ToString()
-            Dim position = selectedRow.Cells("Chức vụ").Value.ToString()
-            Dim note = selectedRow.Cells("Ghi chú").Value.ToString()
+            Dim selectedrow = tableView.SelectedRows(0)
+            Dim id = CInt(selectedrow.Cells("id").Value)
+            Dim name = selectedrow.Cells("họ tên").Value.ToString()
+            Dim dob = selectedrow.Cells("năm sinh").Value.ToString()
+            Dim address = selectedrow.Cells("địa chỉ").Value.ToString()
+            Dim department = selectedrow.Cells("bộ phận").Value.ToString()
+            Dim position = selectedrow.Cells("chức vụ").Value.ToString()
+            Dim note = selectedrow.Cells("ghi chú").Value.ToString()
 
             Dim form2 As New Form2(id, name, dob, address, department, position, note)
 
@@ -117,7 +118,7 @@ Public Class Form1
                 For Each row As DataGridViewRow In tableView.SelectedRows
                     Dim id = CInt(row.Cells("ID").Value)
                     Dim dataAccess As New DataAccess()
-                    dataAccess.DeletePerson(id)
+                    DataAccess.DeletePerson(id)
                     tableView.Rows.Remove(row)
                 Next
             End If
@@ -140,7 +141,7 @@ Public Class Form1
                 Dim dataAccess As New DataAccess()
 
                 If person IsNot Nothing Then
-                    dataAccess.UpdatePerson(person)
+                    DataAccess.UpdatePerson(person)
                 End If
                 Exit For
             End If
@@ -153,7 +154,7 @@ Public Class Form1
         Dim dataAccess As New DataAccess()
 
         If person IsNot Nothing Then
-            dataAccess.InsertPerson(person)
+            DataAccess.InsertPerson(person)
             table.Rows.Add(person.id, person.fullName, person.dateOfBirth, person.address, person.department, person.position, person.note)
         End If
 
@@ -188,14 +189,14 @@ Public Class Form1
         End If
 
         Try
-       Using reader As New StreamReader(openFileDialog.FileName)
+            Using reader As New StreamReader(openFileDialog.FileName)
                 While reader.Peek() <> -1
                     Dim line As String = reader.ReadLine()
                     Dim row As String() = line.Split(","c)
                     Dim person As Person = Person.FromCsvRow(row)
                     Dim dataAccess As New DataAccess()
                     If person IsNot Nothing Then
-                        dataAccess.InsertPerson(person)
+                        DataAccess.InsertPerson(person)
                         table.Rows.Add(person.id, person.fullName, person.dateOfBirth, person.address, person.department, person.position, person.note)
                     End If
                 End While

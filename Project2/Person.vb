@@ -1,4 +1,6 @@
-﻿Imports System.Data.SqlClient
+﻿Imports System.Collections.Generic
+Imports System.Data
+Imports System.Data.SqlClient
 
 Public Class Person
     Public id As Integer
@@ -131,4 +133,5 @@ Public Class DataAccess
 
         Return persons
     End Function
+
 End Class

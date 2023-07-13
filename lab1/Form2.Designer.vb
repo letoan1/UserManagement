@@ -22,6 +22,7 @@ Partial Class Form2
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Form2))
         Me.mainTitle = New System.Windows.Forms.Label()
         Me.dateLabel = New System.Windows.Forms.Label()
         Me.fullName = New System.Windows.Forms.Label()
@@ -38,6 +39,13 @@ Partial Class Form2
         Me.saveBtn = New System.Windows.Forms.Button()
         Me.exitBtn = New System.Windows.Forms.Button()
         Me.dateOfBirthBox = New System.Windows.Forms.DateTimePicker()
+        Me.nameErrorLabel = New System.Windows.Forms.Label()
+        Me.addressErrorLabel = New System.Windows.Forms.Label()
+        Me.departmentErrorLabel = New System.Windows.Forms.Label()
+        Me.positionErrorLabel = New System.Windows.Forms.Label()
+        Me.noteErrorLabel = New System.Windows.Forms.Label()
+        Me.dobErrorLabel = New System.Windows.Forms.Label()
+        Me.Panel1 = New System.Windows.Forms.Panel()
         Me.SuspendLayout()
         '
         'mainTitle
@@ -163,23 +171,31 @@ Partial Class Form2
         '
         Me.saveBtn.BackColor = System.Drawing.SystemColors.ActiveCaption
         Me.saveBtn.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.saveBtn.Image = CType(resources.GetObject("saveBtn.Image"), System.Drawing.Image)
+        Me.saveBtn.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.saveBtn.Location = New System.Drawing.Point(229, 470)
         Me.saveBtn.Name = "saveBtn"
-        Me.saveBtn.Size = New System.Drawing.Size(101, 33)
+        Me.saveBtn.Size = New System.Drawing.Size(117, 45)
         Me.saveBtn.TabIndex = 15
         Me.saveBtn.Text = "Save"
+        Me.saveBtn.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText
         Me.saveBtn.UseVisualStyleBackColor = False
         '
         'exitBtn
         '
         Me.exitBtn.BackColor = System.Drawing.SystemColors.ActiveCaption
         Me.exitBtn.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.exitBtn.ForeColor = System.Drawing.SystemColors.ActiveCaptionText
+        Me.exitBtn.Image = CType(resources.GetObject("exitBtn.Image"), System.Drawing.Image)
+        Me.exitBtn.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.exitBtn.Location = New System.Drawing.Point(379, 470)
         Me.exitBtn.Name = "exitBtn"
-        Me.exitBtn.Size = New System.Drawing.Size(101, 33)
+        Me.exitBtn.Size = New System.Drawing.Size(108, 45)
         Me.exitBtn.TabIndex = 16
         Me.exitBtn.Text = "Exit"
+        Me.exitBtn.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText
         Me.exitBtn.UseVisualStyleBackColor = False
+        Me.exitBtn.UseWaitCursor = True
         '
         'dateOfBirthBox
         '
@@ -190,11 +206,80 @@ Partial Class Form2
         Me.dateOfBirthBox.Size = New System.Drawing.Size(469, 20)
         Me.dateOfBirthBox.TabIndex = 17
         '
+        'nameErrorLabel
+        '
+        Me.nameErrorLabel.AutoSize = True
+        Me.nameErrorLabel.ForeColor = System.Drawing.Color.Red
+        Me.nameErrorLabel.Location = New System.Drawing.Point(228, 162)
+        Me.nameErrorLabel.Name = "nameErrorLabel"
+        Me.nameErrorLabel.Size = New System.Drawing.Size(0, 13)
+        Me.nameErrorLabel.TabIndex = 18
+        '
+        'addressErrorLabel
+        '
+        Me.addressErrorLabel.AutoSize = True
+        Me.addressErrorLabel.ForeColor = System.Drawing.Color.Red
+        Me.addressErrorLabel.Location = New System.Drawing.Point(228, 238)
+        Me.addressErrorLabel.Name = "addressErrorLabel"
+        Me.addressErrorLabel.Size = New System.Drawing.Size(0, 13)
+        Me.addressErrorLabel.TabIndex = 20
+        '
+        'departmentErrorLabel
+        '
+        Me.departmentErrorLabel.AutoSize = True
+        Me.departmentErrorLabel.ForeColor = System.Drawing.Color.Red
+        Me.departmentErrorLabel.Location = New System.Drawing.Point(228, 278)
+        Me.departmentErrorLabel.Name = "departmentErrorLabel"
+        Me.departmentErrorLabel.Size = New System.Drawing.Size(0, 13)
+        Me.departmentErrorLabel.TabIndex = 21
+        '
+        'positionErrorLabel
+        '
+        Me.positionErrorLabel.AutoSize = True
+        Me.positionErrorLabel.ForeColor = System.Drawing.Color.Red
+        Me.positionErrorLabel.Location = New System.Drawing.Point(228, 317)
+        Me.positionErrorLabel.Name = "positionErrorLabel"
+        Me.positionErrorLabel.Size = New System.Drawing.Size(0, 13)
+        Me.positionErrorLabel.TabIndex = 22
+        '
+        'noteErrorLabel
+        '
+        Me.noteErrorLabel.AutoSize = True
+        Me.noteErrorLabel.ForeColor = System.Drawing.Color.Red
+        Me.noteErrorLabel.Location = New System.Drawing.Point(228, 441)
+        Me.noteErrorLabel.Name = "noteErrorLabel"
+        Me.noteErrorLabel.Size = New System.Drawing.Size(0, 13)
+        Me.noteErrorLabel.TabIndex = 23
+        '
+        'dobErrorLabel
+        '
+        Me.dobErrorLabel.AutoSize = True
+        Me.dobErrorLabel.ForeColor = System.Drawing.Color.Red
+        Me.dobErrorLabel.Location = New System.Drawing.Point(228, 201)
+        Me.dobErrorLabel.Name = "dobErrorLabel"
+        Me.dobErrorLabel.Size = New System.Drawing.Size(0, 13)
+        Me.dobErrorLabel.TabIndex = 24
+        '
+        'Panel1
+        '
+        Me.Panel1.BackColor = System.Drawing.SystemColors.ActiveCaption
+        Me.Panel1.Location = New System.Drawing.Point(79, 90)
+        Me.Panel1.Name = "Panel1"
+        Me.Panel1.Size = New System.Drawing.Size(618, 10)
+        Me.Panel1.TabIndex = 25
+        '
         'Form2
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1033, 637)
+        Me.Controls.Add(Me.Panel1)
+        Me.Controls.Add(Me.dobErrorLabel)
+        Me.Controls.Add(Me.noteErrorLabel)
+        Me.Controls.Add(Me.positionErrorLabel)
+        Me.Controls.Add(Me.departmentErrorLabel)
+        Me.Controls.Add(Me.addressErrorLabel)
+        Me.Controls.Add(Me.nameErrorLabel)
         Me.Controls.Add(Me.dateOfBirthBox)
         Me.Controls.Add(Me.exitBtn)
         Me.Controls.Add(Me.saveBtn)
@@ -213,6 +298,7 @@ Partial Class Form2
         Me.Controls.Add(Me.mainTitle)
         Me.KeyPreview = True
         Me.Name = "Form2"
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Form2"
         Me.ResumeLayout(False)
         Me.PerformLayout()
@@ -235,4 +321,11 @@ Partial Class Form2
     Friend WithEvents saveBtn As Button
     Friend WithEvents exitBtn As Button
     Friend WithEvents dateOfBirthBox As DateTimePicker
+    Friend WithEvents nameErrorLabel As Label
+    Friend WithEvents addressErrorLabel As Label
+    Friend WithEvents departmentErrorLabel As Label
+    Friend WithEvents positionErrorLabel As Label
+    Friend WithEvents noteErrorLabel As Label
+    Friend WithEvents dobErrorLabel As Label
+    Friend WithEvents Panel1 As Panel
 End Class

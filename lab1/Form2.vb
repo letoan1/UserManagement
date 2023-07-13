@@ -16,6 +16,7 @@ Public Class Form2
 
     Private Sub Form2_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         dateLabel.Text = Form1.ShowTime()
+        departmentBox.DropDownStyle = ComboBoxStyle.DropDownList
     End Sub
 
     Private Sub btnExit_Click(sender As Object, e As EventArgs) Handles exitBtn.Click
@@ -23,14 +24,62 @@ Public Class Form2
         Me.Hide()
     End Sub
 
+    Private Function ValidateTextBox(textBox As TextBox, errorLabel As Label, Optional maxLength As Integer = Integer.MaxValue) As String
+        Dim text = textBox.Text.Trim()
+
+        If String.IsNullOrEmpty(text) Then
+            errorLabel.Text = "This field is required."
+            errorLabel.Visible = True
+            Return Nothing
+        End If
+
+        If text.Length > maxLength Then
+            errorLabel.Text = $"Maximum length is {maxLength}."
+            errorLabel.Visible = True
+            Return Nothing
+        End If
+
+        errorLabel.Visible = False
+        Return text
+    End Function
+
+    Private Function ValidateComboBox(comboBox As ComboBox, errorLabel As Label, allowedValues As String()) As String
+        Dim selectedValue = comboBox.SelectedItem?.ToString()
+
+        If Not allowedValues.Contains(selectedValue) Then
+            errorLabel.Text = $"Invalid value. Allowed values: {String.Join(", ", allowedValues)}."
+            errorLabel.Visible = True
+            Return Nothing
+        End If
+        Return selectedValue
+    End Function
+
+    Private Function ValidateDateTimePicker(dateTimePicker As DateTimePicker, errorLabel As Label) As Date?
+        Dim selectedDate = dateTimePicker.Value.Date
+
+        If selectedDate > Date.Today Then
+            errorLabel.Text = "Date of birth cannot be in the future."
+            errorLabel.Visible = True
+            Return Nothing
+        End If
+
+        errorLabel.Visible = False
+
+        Return selectedDate
+    End Function
+
 
     Private Sub btnSave_Click(sender As Object, e As EventArgs) Handles saveBtn.Click
-        Dim name = fullNameBox.Text.Trim()
-        Dim dob = dateOfBirthBox.Text.Trim()
-        Dim address = addressBox.Text.Trim()
-        Dim department = departmentBox.Text.Trim()
-        Dim position = positionBox.Text.Trim()
+        Dim name = ValidateTextBox(fullNameBox, nameErrorLabel, maxLength:=50)
+        Dim dob = ValidateDateTimePicker(dateOfBirthBox, dobErrorLabel)
+        Dim address = ValidateTextBox(addressBox, addressErrorLabel, maxLength:=50)
+        Dim department = ValidateComboBox(departmentBox, departmentErrorLabel, {"IT", "HR", "Sale", "Dev"})
+        Dim position = ValidateTextBox(positionBox, positionErrorLabel, maxLength:=50)
         Dim note = noteBox.Text.Trim()
+
+        If name Is Nothing OrElse dob Is Nothing OrElse address Is Nothing OrElse department Is Nothing OrElse position Is Nothing OrElse note Is Nothing Then
+            Return
+        End If
 
         Dim result As DialogResult
         Dim newId As Integer
@@ -54,6 +103,26 @@ Public Class Form2
         End If
 
         Me.Close()
+
+    End Sub
+    Private Sub TextBox_Leave(sender As Object, e As EventArgs) Handles fullNameBox.Leave, dateOfBirthBox.Leave, addressBox.Leave, departmentBox.Leave, positionBox.Leave, noteBox.Leave
+        Dim control = DirectCast(sender, Control)
+        Dim errorLabel = DirectCast(control.Tag, Label)
+
+        If TypeOf control Is TextBox AndAlso Not String.IsNullOrEmpty(control.Text) Then
+            Select Case control.Name
+                Case "fullNameBox"
+                    ValidateTextBox(fullNameBox, nameErrorLabel, maxLength:=50)
+                Case "addressBox"
+                    ValidateTextBox(addressBox, addressErrorLabel, maxLength:=50)
+                Case "positionBox"
+                    ValidateTextBox(positionBox, positionErrorLabel, maxLength:=50)
+            End Select
+        ElseIf TypeOf control Is ComboBox Then
+            ValidateComboBox(DirectCast(control, ComboBox), errorLabel, {"IT", "HR", "Sale", "Dev"})
+        ElseIf TypeOf control Is DateTimePicker Then
+            ValidateDateTimePicker(DirectCast(control, DateTimePicker), dobErrorLabel)
+        End If
     End Sub
 
     Private Sub F5ToSave(sender As Object, e As KeyEventArgs) Handles MyBase.KeyDown
