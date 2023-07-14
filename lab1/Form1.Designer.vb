@@ -40,6 +40,8 @@ Partial Class Form1
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.BindingSource1 = New System.Windows.Forms.BindingSource(Me.components)
         Me.BindingSource2 = New System.Windows.Forms.BindingSource(Me.components)
+        Me.usernameLabel = New System.Windows.Forms.Label()
+        Me.btnLogout = New System.Windows.Forms.Button()
         CType(Me.tableView, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.BindingSource1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.BindingSource2, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -174,12 +176,35 @@ Partial Class Form1
         Me.Panel1.Size = New System.Drawing.Size(749, 10)
         Me.Panel1.TabIndex = 11
         '
+        'usernameLabel
+        '
+        Me.usernameLabel.AutoSize = True
+        Me.usernameLabel.Location = New System.Drawing.Point(69, 115)
+        Me.usernameLabel.Name = "usernameLabel"
+        Me.usernameLabel.Size = New System.Drawing.Size(39, 13)
+        Me.usernameLabel.TabIndex = 12
+        Me.usernameLabel.Text = "Label1"
+        '
+        'btnLogout
+        '
+        Me.btnLogout.BackColor = System.Drawing.Color.IndianRed
+        Me.btnLogout.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnLogout.ForeColor = System.Drawing.SystemColors.InfoText
+        Me.btnLogout.Location = New System.Drawing.Point(72, 131)
+        Me.btnLogout.Name = "btnLogout"
+        Me.btnLogout.Size = New System.Drawing.Size(75, 23)
+        Me.btnLogout.TabIndex = 13
+        Me.btnLogout.Text = "Logout"
+        Me.btnLogout.UseVisualStyleBackColor = False
+        '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.SystemColors.ButtonHighlight
         Me.ClientSize = New System.Drawing.Size(1109, 570)
+        Me.Controls.Add(Me.btnLogout)
+        Me.Controls.Add(Me.usernameLabel)
         Me.Controls.Add(Me.Panel1)
         Me.Controls.Add(Me.btnExportPDF)
         Me.Controls.Add(Me.btnImport)
@@ -220,4 +245,6 @@ Partial Class Form1
     Public WithEvents btnExport As Button
     Public WithEvents btnImport As Button
     Public WithEvents btnExportPDF As Button
+    Friend WithEvents usernameLabel As Label
+    Friend WithEvents btnLogout As Button
 End Class

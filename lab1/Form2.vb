@@ -1,5 +1,7 @@
 ﻿Imports System.Globalization
+Imports System.Runtime.Remoting.Messaging
 Imports System.Security.Cryptography
+Imports Model
 
 Public Class Form2
     Private id As Integer
@@ -17,6 +19,9 @@ Public Class Form2
     Private Sub Form2_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         dateLabel.Text = Form1.ShowTime()
         departmentBox.DropDownStyle = ComboBoxStyle.DropDownList
+        Dim departments As String() = {"IT", "HR", "Sale", "Dev"}
+        departmentBox.DataSource = departments
+        Me.panelSignup.Hide()
     End Sub
 
     Private Sub btnExit_Click(sender As Object, e As EventArgs) Handles exitBtn.Click
@@ -24,7 +29,7 @@ Public Class Form2
         Me.Hide()
     End Sub
 
-    Private Function ValidateTextBox(textBox As TextBox, errorLabel As Label, Optional maxLength As Integer = Integer.MaxValue) As String
+    Private Function ValidateTextBox(textBox As TextBox, errorLabel As Label, Optional maxLength As Integer = Integer.MaxValue, Optional minLength As Integer = 0) As String
         Dim text = textBox.Text.Trim()
 
         If String.IsNullOrEmpty(text) Then
@@ -35,6 +40,10 @@ Public Class Form2
 
         If text.Length > maxLength Then
             errorLabel.Text = $"Maximum length is {maxLength}."
+            errorLabel.Visible = True
+            Return Nothing
+        ElseIf (text.Length < minLength) Then
+            errorLabel.Text = $"Miximum length is {minLength}."
             errorLabel.Visible = True
             Return Nothing
         End If
@@ -76,13 +85,17 @@ Public Class Form2
         Dim department = ValidateComboBox(departmentBox, departmentErrorLabel, {"IT", "HR", "Sale", "Dev"})
         Dim position = ValidateTextBox(positionBox, positionErrorLabel, maxLength:=50)
         Dim note = noteBox.Text.Trim()
+        Dim user_name = ValidateTextBox(nameSignup, usernameErrorLabel, maxLength:=50)
+        Dim pass = ValidateTextBox(pwSignup, pwErrorLabel, maxLength:=50, minLength:=8)
 
         If name Is Nothing OrElse dob Is Nothing OrElse address Is Nothing OrElse department Is Nothing OrElse position Is Nothing OrElse note Is Nothing Then
             Return
         End If
 
+
         Dim result As DialogResult
         Dim newId As Integer
+        Dim dataAccess As New DataAccess()
 
         If id > 0 Then
             result = MessageBox.Show("Are you sure you want to update this record?", "Confirm Update", MessageBoxButtons.OKCancel, MessageBoxIcon.Question)
@@ -97,13 +110,15 @@ Public Class Form2
             If result = DialogResult.OK Then
                 Form1.Show()
                 newId = Form1.CreateUser(name, dob, address, department, position, note)
+                If nameSignup.Visible = True And pwSignup.Visible = True Then
+                    DataAccess.SignUp(user_name, pass)
+                End If
             Else
                 Form1.Show()
             End If
         End If
 
         Me.Close()
-
     End Sub
     Private Sub TextBox_Leave(sender As Object, e As EventArgs) Handles fullNameBox.Leave, dateOfBirthBox.Leave, addressBox.Leave, departmentBox.Leave, positionBox.Leave, noteBox.Leave
         Dim control = DirectCast(sender, Control)
@@ -117,6 +132,10 @@ Public Class Form2
                     ValidateTextBox(addressBox, addressErrorLabel, maxLength:=50)
                 Case "positionBox"
                     ValidateTextBox(positionBox, positionErrorLabel, maxLength:=50)
+                Case "nameSignup"
+                    ValidateTextBox(nameSignup, usernameErrorLabel, maxLength:=50)
+                Case "pwSignup"
+                    ValidateTextBox(pwSignup, pwErrorLabel, maxLength:=50, minLength:=8)
             End Select
         ElseIf TypeOf control Is ComboBox Then
             ValidateComboBox(DirectCast(control, ComboBox), errorLabel, {"IT", "HR", "Sale", "Dev"})
@@ -129,5 +148,9 @@ Public Class Form2
         If e.KeyValue = Keys.F5 Then
             btnSave_Click(sender, e)
         End If
+    End Sub
+
+    Private Sub btnSignup_Click(sender As Object, e As EventArgs) Handles btnSignup.Click
+        panelSignup.Visible = Not panelSignup.Visible
     End Sub
 End Class

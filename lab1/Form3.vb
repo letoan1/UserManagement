@@ -8,11 +8,10 @@ Public Class Form3
         Dim dataAccess As New DataAccess()
 
         If DataAccess.Login(username, pw) Then
-            Dim form1 As New Form1()
-            form1.Show()
+            Form1.Show()
             Me.Hide()
         Else
-            MessageBox.Show("Invalid username or password", "Login failed !", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            loginFailureLabel.Text = "* Invalid username or password !"
         End If
     End Sub
 End Class

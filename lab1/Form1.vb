@@ -20,8 +20,12 @@ Public Class Form1
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Dim dataAccess As New DataAccess()
         DataAccess.ConnectionDatabase()
-
         dateLabel.Text = ShowTime()
+        Dim info As Tuple(Of String, String) = DataAccess.GetInfo()
+        Dim username As String = info.Item1
+        Dim userrole As String = info.Item2
+
+        usernameLabel.Text = $"@{username}"
 
         table.Columns.Add("ID", GetType(Integer))
         table.Columns.Add("Họ Tên", GetType(String))
@@ -39,14 +43,14 @@ Public Class Form1
         tableView.AllowUserToAddRows = False
         tableView.ReadOnly = True
 
-        Dim role As String = DataAccess.GetRole()
-        If role = "viewer" Then
-            Me.createBtn.Hide()
-            Me.btnImport.Hide()
-            Me.btnExport.Hide()
-            Me.btnExportPDF.Hide()
-            Me.editBtn.Hide()
-            Me.deleteBtn.Hide()
+
+        If userrole = "viewer" Then
+            createBtn.Visible = False
+            btnImport.Visible = False
+            btnExport.Visible = False
+            btnExportPDF.Visible = False
+            editBtn.Visible = False
+            deleteBtn.Visible = False
         End If
 
     End Sub
@@ -241,5 +245,11 @@ Public Class Form1
         End If
 
         ExportToPdf(saveFileDialog.FileName)
+    End Sub
+
+    Private Sub btnLogout_Click(sender As Object, e As EventArgs) Handles btnLogout.Click
+        Me.Hide()
+        Dim Form3 As New Form3()
+        Form3.Show()
     End Sub
 End Class

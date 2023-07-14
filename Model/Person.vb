@@ -45,8 +45,10 @@ Public Class Person
     End Function
 End Class
 
-
-
+Public Class UserInfo
+    Public Property UserName As String
+    Public Property UserRole As String
+End Class
 Public Class DataAccess
     Private Shared Connect As SqlConnection
 
@@ -155,7 +157,8 @@ Public Class DataAccess
         End Using
     End Function
 
-    Public Shared _UserRole As String = Nothing
+    Private Shared _UserName As String = Nothing
+    Private Shared _UserRole As String = Nothing
     Public Shared Function Login(username As String, pw As String) As Boolean
         Dim query As String = "SELECT password, role FROM auth WHERE username = @username"
         Dim password As String = Nothing
@@ -174,15 +177,35 @@ Public Class DataAccess
         End Using
 
         If password IsNot Nothing AndAlso password = pw Then
+            _UserName = username
             _UserRole = role
             Return True
         Else
-            Return False
+            Return Nothing
         End If
     End Function
 
-    Public Shared Function GetRole() As String
-        Return _UserRole
+    Public Shared Function GetInfo() As Tuple(Of String, String)
+        Return Tuple.Create(_UserName, _UserRole)
     End Function
+
+    Public Shared Sub SignUp(ByVal username As String, ByVal pw As String, Optional role As String = "viewer")
+        Dim query As String = "INSERT INTO auth (username, password, role) VALUES (@username, @password, @role)"
+
+        Dim transaction As SqlTransaction = Connect.BeginTransaction()
+
+        Try
+            Using command As New SqlCommand(query, Connect, transaction)
+                command.Parameters.AddWithValue("@username", username)
+                command.Parameters.AddWithValue("@password", pw)
+                command.Parameters.AddWithValue("@role", role)
+                command.ExecuteNonQuery()
+            End Using
+            transaction.Commit()
+        Catch ex As Exception
+            transaction.Rollback()
+            Throw ex
+        End Try
+    End Sub
 
 End Class

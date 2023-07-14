@@ -28,6 +28,7 @@ Partial Class Form3
         Me.passwordLabel = New System.Windows.Forms.Label()
         Me.passwordBox = New System.Windows.Forms.TextBox()
         Me.btnLogin = New System.Windows.Forms.Button()
+        Me.loginFailureLabel = New System.Windows.Forms.Label()
         Me.SuspendLayout()
         '
         'mainTitle
@@ -78,18 +79,28 @@ Partial Class Form3
         'btnLogin
         '
         Me.btnLogin.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnLogin.Location = New System.Drawing.Point(300, 175)
+        Me.btnLogin.Location = New System.Drawing.Point(298, 192)
         Me.btnLogin.Name = "btnLogin"
         Me.btnLogin.Size = New System.Drawing.Size(103, 30)
         Me.btnLogin.TabIndex = 5
         Me.btnLogin.Text = "LOGIN"
         Me.btnLogin.UseVisualStyleBackColor = True
         '
+        'loginFailureLabel
+        '
+        Me.loginFailureLabel.AutoSize = True
+        Me.loginFailureLabel.ForeColor = System.Drawing.Color.Red
+        Me.loginFailureLabel.Location = New System.Drawing.Point(222, 174)
+        Me.loginFailureLabel.Name = "loginFailureLabel"
+        Me.loginFailureLabel.Size = New System.Drawing.Size(0, 13)
+        Me.loginFailureLabel.TabIndex = 6
+        '
         'Form3
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(800, 450)
+        Me.Controls.Add(Me.loginFailureLabel)
         Me.Controls.Add(Me.btnLogin)
         Me.Controls.Add(Me.passwordBox)
         Me.Controls.Add(Me.passwordLabel)
@@ -109,4 +120,5 @@ Partial Class Form3
     Friend WithEvents passwordLabel As Label
     Friend WithEvents passwordBox As TextBox
     Friend WithEvents btnLogin As Button
+    Friend WithEvents loginFailureLabel As Label
 End Class
