@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
-Partial Class Form2
+Partial Class DataInteraction
     Inherits System.Windows.Forms.Form
 
     'Form overrides dispose to clean up the component list.
@@ -22,7 +22,7 @@ Partial Class Form2
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Form2))
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(DataInteraction))
         Me.mainTitle = New System.Windows.Forms.Label()
         Me.dateLabel = New System.Windows.Forms.Label()
         Me.fullName = New System.Windows.Forms.Label()
@@ -47,13 +47,16 @@ Partial Class Form2
         Me.dobErrorLabel = New System.Windows.Forms.Label()
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.panelSignup = New System.Windows.Forms.Panel()
+        Me.comboboxRole = New System.Windows.Forms.ComboBox()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.pwErrorLabel = New System.Windows.Forms.Label()
+        Me.usernameErrorLabel = New System.Windows.Forms.Label()
         Me.pwLabel = New System.Windows.Forms.Label()
         Me.usernameLabel = New System.Windows.Forms.Label()
         Me.pwSignup = New System.Windows.Forms.TextBox()
         Me.nameSignup = New System.Windows.Forms.TextBox()
         Me.btnSignup = New System.Windows.Forms.Button()
-        Me.usernameErrorLabel = New System.Windows.Forms.Label()
-        Me.pwErrorLabel = New System.Windows.Forms.Label()
+        Me.roleErrorLabel = New System.Windows.Forms.Label()
         Me.panelSignup.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -170,6 +173,7 @@ Partial Class Form2
         'departmentBox
         '
         Me.departmentBox.FormattingEnabled = True
+        Me.departmentBox.Items.AddRange(New Object() {"IT", "HR", "Sale", "Dev"})
         Me.departmentBox.Location = New System.Drawing.Point(229, 254)
         Me.departmentBox.Name = "departmentBox"
         Me.departmentBox.Size = New System.Drawing.Size(469, 21)
@@ -278,6 +282,8 @@ Partial Class Form2
         '
         'panelSignup
         '
+        Me.panelSignup.Controls.Add(Me.comboboxRole)
+        Me.panelSignup.Controls.Add(Me.Label1)
         Me.panelSignup.Controls.Add(Me.pwErrorLabel)
         Me.panelSignup.Controls.Add(Me.usernameErrorLabel)
         Me.panelSignup.Controls.Add(Me.pwLabel)
@@ -286,8 +292,45 @@ Partial Class Form2
         Me.panelSignup.Controls.Add(Me.nameSignup)
         Me.panelSignup.Location = New System.Drawing.Point(129, 459)
         Me.panelSignup.Name = "panelSignup"
-        Me.panelSignup.Size = New System.Drawing.Size(568, 75)
+        Me.panelSignup.Size = New System.Drawing.Size(568, 103)
         Me.panelSignup.TabIndex = 26
+        '
+        'comboboxRole
+        '
+        Me.comboboxRole.FormattingEnabled = True
+        Me.comboboxRole.Items.AddRange(New Object() {"Admin", "Viewer"})
+        Me.comboboxRole.Location = New System.Drawing.Point(106, 69)
+        Me.comboboxRole.Name = "comboboxRole"
+        Me.comboboxRole.Size = New System.Drawing.Size(462, 21)
+        Me.comboboxRole.TabIndex = 28
+        '
+        'Label1
+        '
+        Me.Label1.AutoSize = True
+        Me.Label1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label1.Location = New System.Drawing.Point(5, 77)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(44, 13)
+        Me.Label1.TabIndex = 31
+        Me.Label1.Text = "Vai trò"
+        '
+        'pwErrorLabel
+        '
+        Me.pwErrorLabel.AutoSize = True
+        Me.pwErrorLabel.ForeColor = System.Drawing.Color.Red
+        Me.pwErrorLabel.Location = New System.Drawing.Point(103, 62)
+        Me.pwErrorLabel.Name = "pwErrorLabel"
+        Me.pwErrorLabel.Size = New System.Drawing.Size(0, 13)
+        Me.pwErrorLabel.TabIndex = 28
+        '
+        'usernameErrorLabel
+        '
+        Me.usernameErrorLabel.AutoSize = True
+        Me.usernameErrorLabel.ForeColor = System.Drawing.Color.Red
+        Me.usernameErrorLabel.Location = New System.Drawing.Point(103, 23)
+        Me.usernameErrorLabel.Name = "usernameErrorLabel"
+        Me.usernameErrorLabel.Size = New System.Drawing.Size(0, 13)
+        Me.usernameErrorLabel.TabIndex = 30
         '
         'pwLabel
         '
@@ -339,29 +382,22 @@ Partial Class Form2
         Me.btnSignup.UseVisualStyleBackColor = False
         Me.btnSignup.UseWaitCursor = True
         '
-        'usernameErrorLabel
+        'roleErrorLabel
         '
-        Me.usernameErrorLabel.AutoSize = True
-        Me.usernameErrorLabel.ForeColor = System.Drawing.Color.Red
-        Me.usernameErrorLabel.Location = New System.Drawing.Point(103, 23)
-        Me.usernameErrorLabel.Name = "usernameErrorLabel"
-        Me.usernameErrorLabel.Size = New System.Drawing.Size(0, 13)
-        Me.usernameErrorLabel.TabIndex = 30
+        Me.roleErrorLabel.AutoSize = True
+        Me.roleErrorLabel.BackColor = System.Drawing.Color.White
+        Me.roleErrorLabel.ForeColor = System.Drawing.Color.Red
+        Me.roleErrorLabel.Location = New System.Drawing.Point(232, 552)
+        Me.roleErrorLabel.Name = "roleErrorLabel"
+        Me.roleErrorLabel.Size = New System.Drawing.Size(0, 13)
+        Me.roleErrorLabel.TabIndex = 28
         '
-        'pwErrorLabel
-        '
-        Me.pwErrorLabel.AutoSize = True
-        Me.pwErrorLabel.ForeColor = System.Drawing.Color.Red
-        Me.pwErrorLabel.Location = New System.Drawing.Point(103, 62)
-        Me.pwErrorLabel.Name = "pwErrorLabel"
-        Me.pwErrorLabel.Size = New System.Drawing.Size(0, 13)
-        Me.pwErrorLabel.TabIndex = 28
-        '
-        'Form2
+        'DataInteraction
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1033, 637)
+        Me.Controls.Add(Me.roleErrorLabel)
         Me.Controls.Add(Me.btnSignup)
         Me.Controls.Add(Me.panelSignup)
         Me.Controls.Add(Me.Panel1)
@@ -388,7 +424,7 @@ Partial Class Form2
         Me.Controls.Add(Me.dateLabel)
         Me.Controls.Add(Me.mainTitle)
         Me.KeyPreview = True
-        Me.Name = "Form2"
+        Me.Name = "DataInteraction"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Form2"
         Me.panelSignup.ResumeLayout(False)
@@ -410,7 +446,6 @@ Partial Class Form2
     Friend WithEvents addressBox As TextBox
     Friend WithEvents positionBox As TextBox
     Friend WithEvents noteBox As TextBox
-    Friend WithEvents departmentBox As ComboBox
     Friend WithEvents saveBtn As Button
     Friend WithEvents exitBtn As Button
     Friend WithEvents dateOfBirthBox As DateTimePicker
@@ -429,4 +464,8 @@ Partial Class Form2
     Friend WithEvents btnSignup As Button
     Friend WithEvents usernameErrorLabel As Label
     Friend WithEvents pwErrorLabel As Label
+    Public WithEvents departmentBox As ComboBox
+    Public WithEvents comboboxRole As ComboBox
+    Friend WithEvents Label1 As Label
+    Friend WithEvents roleErrorLabel As Label
 End Class

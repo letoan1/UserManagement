@@ -45,10 +45,6 @@ Public Class Person
     End Function
 End Class
 
-Public Class UserInfo
-    Public Property UserName As String
-    Public Property UserRole As String
-End Class
 Public Class DataAccess
     Private Shared Connect As SqlConnection
 
@@ -207,5 +203,4 @@ Public Class DataAccess
             Throw ex
         End Try
     End Sub
-
 End Class

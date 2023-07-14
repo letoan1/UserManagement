@@ -7,7 +7,7 @@ Imports iTextSharp.text.pdf
 Imports Model
 Imports System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel
 
-Public Class Form1
+Public Class HomePage
     Dim table As New DataTable()
 
     Public Function ShowTime()
@@ -16,16 +16,9 @@ Public Class Form1
         Return displayDate
     End Function
 
-
-    Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        Dim dataAccess As New DataAccess()
+    Dim dataAccess As New DataAccess()
+    Private Function InitScreen() As DataAccess
         DataAccess.ConnectionDatabase()
-        dateLabel.Text = ShowTime()
-        Dim info As Tuple(Of String, String) = DataAccess.GetInfo()
-        Dim username As String = info.Item1
-        Dim userrole As String = info.Item2
-
-        usernameLabel.Text = $"@{username}"
 
         table.Columns.Add("ID", GetType(Integer))
         table.Columns.Add("Họ Tên", GetType(String))
@@ -35,16 +28,28 @@ Public Class Form1
         table.Columns.Add("Chức vụ", GetType(String))
         table.Columns.Add("Ghi chú", GetType(String))
 
-        LoadData()
+        Return dataAccess
+    End Function
+    Private Function LoadData() As List(Of Person)
+        Dim personList As List(Of Person) = DataAccess.GetAllPersons()
 
-        tableView.DataSource = table
+        For Each person As Person In personList
+            table.Rows.Add(person.id, person.fullName, person.dateOfBirth, person.address, person.department, person.position, person.note)
+        Next
 
-        tableView.AutoGenerateColumns = True
-        tableView.AllowUserToAddRows = False
-        tableView.ReadOnly = True
+        Return personList
+    End Function
 
+    Private Sub UpdateScreen()
+        dateLabel.Text = ShowTime()
 
-        If userrole = "viewer" Then
+        Dim info As Tuple(Of String, String) = DataAccess.GetInfo()
+        Dim username As String = info.Item1
+        Dim userrole As String = info.Item2
+
+        usernameLabel.Text = $"@{username}"
+
+        If String.Equals(userrole.ToLower(), "viewer") Then
             createBtn.Visible = False
             btnImport.Visible = False
             btnExport.Visible = False
@@ -53,14 +58,17 @@ Public Class Form1
             deleteBtn.Visible = False
         End If
 
+        tableView.DataSource = table
+
+        tableView.AutoGenerateColumns = True
+        tableView.AllowUserToAddRows = False
+        tableView.ReadOnly = True
     End Sub
 
-    Private Sub LoadData()
-        Dim persons As List(Of Person) = DataAccess.GetAllPersons()
-
-        For Each person As Person In persons
-            table.Rows.Add(person.id, person.fullName, person.dateOfBirth, person.address, person.department, person.position, person.note)
-        Next
+    Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        InitScreen()
+        LoadData()
+        UpdateScreen()
     End Sub
 
     Private Sub ExportToPdf(fileName As String)
@@ -105,7 +113,7 @@ Public Class Form1
     End Sub
 
     Private Sub btnCreate_Click(sender As Object, e As EventArgs) Handles createBtn.Click
-        Dim form2 As New Form2()
+        Dim form2 As New DataInteraction()
         form2.Show(Me)
         Me.Hide()
     End Sub
@@ -120,8 +128,7 @@ Public Class Form1
             Dim department = selectedrow.Cells("bộ phận").Value.ToString()
             Dim position = selectedrow.Cells("chức vụ").Value.ToString()
             Dim note = selectedrow.Cells("ghi chú").Value.ToString()
-
-            Dim form2 As New Form2(id, name, dob, address, department, position, note)
+            Dim form2 As New DataInteraction(id, name, dob, address, department, position, note)
 
             form2.Show()
             Me.Hide()
@@ -249,7 +256,7 @@ Public Class Form1
 
     Private Sub btnLogout_Click(sender As Object, e As EventArgs) Handles btnLogout.Click
         Me.Hide()
-        Dim Form3 As New Form3()
+        Dim Form3 As New LoginPage()
         Form3.Show()
     End Sub
 End Class

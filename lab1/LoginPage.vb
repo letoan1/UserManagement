@@ -1,6 +1,6 @@
 ﻿Imports Model
 
-Public Class Form3
+Public Class LoginPage
     Private Sub btnLogin_Click(sender As Object, e As EventArgs) Handles btnLogin.Click
         Dim username As String = usernameBox.Text.Trim()
         Dim pw As String = passwordBox.Text.Trim()
@@ -8,10 +8,12 @@ Public Class Form3
         Dim dataAccess As New DataAccess()
 
         If DataAccess.Login(username, pw) Then
-            Form1.Show()
+            HomePage.Show()
             Me.Hide()
         Else
             loginFailureLabel.Text = "* Invalid username or password !"
         End If
+
     End Sub
+
 End Class
